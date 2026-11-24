@@ -24,9 +24,7 @@ class Submission(Base):
     """One completed response submitted for a form."""
 
     __tablename__ = "submissions"
-    __table_args__ = (
-        UniqueConstraint("id", "form_id", name="uq_submissions_id_form"),
-    )
+    __table_args__ = (UniqueConstraint("id", "form_id", name="uq_submissions_id_form"),)
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
     form_id: Mapped[str] = mapped_column(
@@ -34,7 +32,9 @@ class Submission(Base):
         ForeignKey("forms.id", ondelete="RESTRICT"),
         nullable=False,
     )
-    submitted_at: Mapped[str] = mapped_column(String(27), nullable=False, default=utc_now)
+    submitted_at: Mapped[str] = mapped_column(
+        String(27), nullable=False, default=utc_now
+    )
 
     form: Mapped[Form] = relationship(back_populates="submissions")
 
@@ -64,7 +64,9 @@ class Answer(Base):
             name="fk_answers_question_form",
             ondelete="RESTRICT",
         ),
-        UniqueConstraint("submission_id", "question_id", name="uq_answers_submission_question"),
+        UniqueConstraint(
+            "submission_id", "question_id", name="uq_answers_submission_question"
+        ),
         UniqueConstraint("id", "question_id", name="uq_answers_id_question"),
     )
 

@@ -12,9 +12,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from app.db.base import Base  # noqa: E402
-from app.db import models as _models  # noqa: E402,F401
-from app.db.session import create_db_engine  # noqa: E402
+from app.db import models as _models  # noqa: F401
+from app.db.base import Base
+from app.db.session import create_db_engine
 
 config = context.config
 if config.config_file_name is not None:

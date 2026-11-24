@@ -17,7 +17,9 @@ class Author(Base):
     __tablename__ = "authors"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
-    session_token_hash: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
+    session_token_hash: Mapped[str] = mapped_column(
+        String(64), nullable=False, unique=True
+    )
     session_expires_at: Mapped[str] = mapped_column(String(27), nullable=False)
     created_at: Mapped[str] = mapped_column(String(27), nullable=False, default=utc_now)
 

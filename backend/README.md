@@ -40,6 +40,17 @@ alembic downgrade -1
 
 > В production база должна находиться на постоянном диске. Файл SQLite, `-wal` и `-shm` не коммитятся в Git: это настроено в корневом [`.gitignore`](../.gitignore).
 
+### Тесты базы данных
+
+Из корня репозитория в активном виртуальном окружении:
+
+```bash
+python -m pip install -r backend/requirements-dev.txt
+python -m pytest
+```
+
+Тесты находятся в [`backend/tests`](tests). Для каждого теста, которому нужна БД, [фикстуры](tests/conftest.py) создают отдельный временный SQLite-файл и применяют миграции Alembic. Настраивать `DATABASE_URL` или запускать `alembic upgrade head` перед тестами не нужно; локальная `app.db` не используется.
+
 ## 2. Карта файлов
 
 | Файл | Назначение |

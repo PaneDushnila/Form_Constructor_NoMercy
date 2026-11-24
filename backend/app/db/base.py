@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
-
 
 NAMING_CONVENTION = {
     "ix": "ix_%(column_0_label)s",
@@ -23,7 +22,7 @@ def new_uuid() -> str:
 
 def utc_now() -> str:
     """Return the single UTC representation used for all persisted timestamps."""
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 
 class Base(DeclarativeBase):

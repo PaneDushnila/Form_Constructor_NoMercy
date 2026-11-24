@@ -8,7 +8,6 @@ Create Date: 2026-11-23
 import sqlalchemy as sa
 from alembic import op
 
-
 revision = "0001_initial_schema"
 down_revision = None
 branch_labels = None
@@ -123,7 +122,9 @@ def upgrade() -> None:
             "position",
             name="uq_question_options_question_position",
         ),
-        sa.UniqueConstraint("id", "question_id", name="uq_question_options_id_question"),
+        sa.UniqueConstraint(
+            "id", "question_id", name="uq_question_options_id_question"
+        ),
     )
 
     op.create_table(
@@ -170,7 +171,9 @@ def upgrade() -> None:
             ondelete="RESTRICT",
         ),
         sa.PrimaryKeyConstraint("id", name="pk_answers"),
-        sa.UniqueConstraint("submission_id", "question_id", name="uq_answers_submission_question"),
+        sa.UniqueConstraint(
+            "submission_id", "question_id", name="uq_answers_submission_question"
+        ),
         sa.UniqueConstraint("id", "question_id", name="uq_answers_id_question"),
     )
 
@@ -214,7 +217,9 @@ def upgrade() -> None:
             name="fk_submission_idempotency_submission_form",
             ondelete="RESTRICT",
         ),
-        sa.PrimaryKeyConstraint("form_id", "idempotency_key", name="pk_submission_idempotency"),
+        sa.PrimaryKeyConstraint(
+            "form_id", "idempotency_key", name="pk_submission_idempotency"
+        ),
         sa.UniqueConstraint(
             "submission_id",
             "form_id",
@@ -243,7 +248,9 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     """Remove the survey database schema."""
-    op.drop_index("ix_submission_idempotency_created_at", table_name="submission_idempotency")
+    op.drop_index(
+        "ix_submission_idempotency_created_at", table_name="submission_idempotency"
+    )
     op.drop_index("ix_answer_options_option_id", table_name="answer_options")
     op.drop_index("ix_answers_question_id", table_name="answers")
     op.drop_index("ix_submissions_form_submitted_at_id", table_name="submissions")
